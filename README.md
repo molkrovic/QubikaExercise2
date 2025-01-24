@@ -70,6 +70,9 @@ To run the test, use the following command:
 
 - This test is implemented as a single E2E test function, as required by the exercise.
 - The user data is saved in a JSON file to fulfill the requirement of "saving the user information," even though the data is not actively used throughout the test. The email is used directly within the test to log in the user.
+- For clarity, it was decided to consider the fact that the newly created category appears at the end of the list, both in the user interface (UI) and when retrieving all categories via the API. **The validation relies on this fact to ensure that a category was created correctly.** This decision was made partly for simplicity, but mainly because, since it is possible to add the same category multiple times (with the same name), searching for the category by name alone would not be sufficient to validate its correct creation (since it might find another category with the same name). Furthermore, as there is no creation timestamp, there is no way to distinguish which is the newly created category other than recognizing that it is the last one in the list.
+
+This has an important implication: **it is NOT possible to run tests in parallel (with more than one worker), as in this case the tests would interfere with each other and fail.**
 
 ## Enhancements
 - Future improvements could include adding more test scenarios, such as updating or deleting categories and subcategories, or handling error cases more robustly.

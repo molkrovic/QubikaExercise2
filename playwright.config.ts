@@ -5,9 +5,9 @@ export default defineConfig({
   expect: {
     timeout: 5000,
   },
-  fullyParallel: true,
+  fullyParallel: false,
   retries: 1,
-  workers: 3,
+  workers: 1,
   use: {
     baseURL: 'https://club-administration.qa.qubika.com',
     trace: 'on-first-retry',
