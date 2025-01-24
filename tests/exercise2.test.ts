@@ -149,17 +149,17 @@ function lastCreatedCategoryApi(categories: any[]): string {
 test('workflow', async ({ page }) => {
   // Step 1: Create a new user through the API and save their information
   const userInfo = await createUserThroughApi();
-  console.log("The user was created")
+  //console.log("The user was created")
   saveUserToFile(userInfo);
-  console.log("The user info was saved")
+  //console.log("The user info was saved")
   const email = userInfo.email;
   const password = "PassQBK";
   const username = userInfo.userName;
-  console.log("Step 1 completed")
+  //console.log("Step 1 completed")
 
   // Step 2: Go to Qubika Sports Club Management System
   await page.goto("https://club-administration.qa.qubika.com/#/auth/login");
-  console.log("Step 2 completed")
+  //console.log("Step 2 completed")
 
   // Step 3: Validate that the login page is displayed correctly
   expect(page.url()).toBe("https://club-administration.qa.qubika.com/#/auth/login");
@@ -176,14 +176,14 @@ test('workflow', async ({ page }) => {
   const loginButton = page.locator('button[type="submit"]');
   await expect(loginButton).toBeVisible();
 
-  console.log("Step 3 completed")
+  //console.log("Step 3 completed")
 
   // Step 4: Log in with the created user
   await emailField.fill(email);
   await passwordField.fill(password);
   await loginButton.click();
 
-  console.log("Step 4 completed")
+  //console.log("Step 4 completed")
 
   // Step 5: Validate that the user is logged in
   const categoryType = page.locator('a.nav-link[href="#/category-type"]');
@@ -194,52 +194,52 @@ test('workflow', async ({ page }) => {
   const dashboardUrl = "https://club-administration.qa.qubika.com/#/dashboard";
   expect(currentUrl).toBe(dashboardUrl);
 
-  console.log("Step 5 completed")
+  //console.log("Step 5 completed")
 
   // Step 6a: Go to the Category page
   await categoryType.click();
 
-  console.log("Step 6a completed")
+  //console.log("Step 6a completed")
 
   // Step 6b: Create a new category and validate that the category was created successfully
   const randomSuffix = Math.random().toString(36).substring(2, 7);
   const randomCategoryName = `Category ${randomSuffix}`;
-  console.log(`Random category created for step 6b: ${randomCategoryName}`)
+  //console.log(`Random category created for step 6b: ${randomCategoryName}`)
 
   await createCategory(page, randomCategoryName);
-  console.log(`Category ${randomCategoryName} created`)
+  //console.log(`Category ${randomCategoryName} created`)
 
 
   // Validating through UI
   await validateCategoryUI(page, randomCategoryName);
-  console.log(`Category ${randomCategoryName} validated (UI)`)
+  //console.log(`Category ${randomCategoryName} validated (UI)`)
 
   // Validating through API
   const token = await authenticateApi(email, password, username);
-  console.log("Token obtained")
+  //console.log("Token obtained")
   const categories = await getCategoriesApi(token);
-  console.log("Categories obtained (API)")
+  //console.log("Categories obtained (API)")
   const newCategory = lastCreatedCategoryApi(categories);
-  console.log(`Last category identified is ${newCategory}`)
+  //console.log(`Last category identified is ${newCategory}`)
   expect(newCategory).toBe(randomCategoryName);
-  console.log(`Category ${randomCategoryName} validated (API)`)
+  //console.log(`Category ${randomCategoryName} validated (API)`)
 
   // Step 6c: Create a subcategory and validate it is displayed in the Categories list
   const randomSubcategoryName = `Subcategory ${randomSuffix}`;
-  console.log(`Random subcategory created for step 6c: ${randomSubcategoryName}`)
+  //console.log(`Random subcategory created for step 6c: ${randomSubcategoryName}`)
 
   await createCategory(page, randomSubcategoryName, true, randomCategoryName);
-  console.log(`Subcategory ${randomSubcategoryName} created`)
+  //console.log(`Subcategory ${randomSubcategoryName} created`)
 
   // Validate through UI
   await validateCategoryUI(page, randomSubcategoryName);
-  console.log(`Subcategory ${randomSubcategoryName} validated (UI)`)
+  //console.log(`Subcategory ${randomSubcategoryName} validated (UI)`)
 
   // Validate through API
   const updatedCategories = await getCategoriesApi(token);
-  console.log("Categories obtained (second time) (API)")
+  //console.log("Categories obtained (second time) (API)")
   const newSubcategory = lastCreatedCategoryApi(updatedCategories);
-  console.log(`Last (sub)category identified is ${newSubcategory}`)
+  //console.log(`Last (sub)category identified is ${newSubcategory}`)
   expect(newSubcategory).toBe(randomSubcategoryName);
-  console.log(`Subcategory ${randomSubcategoryName} validated (API)`)
+  //console.log(`Subcategory ${randomSubcategoryName} validated (API)`)
 });
