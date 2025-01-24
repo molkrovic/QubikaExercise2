@@ -1,0 +1,29 @@
+{
+    "name": "qubikaexercise2",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "index.js",
+    "directories": {
+        "test": "tests"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "@playwright/test": "^1.50.0",
+        "axios": "^1.7.9",
+        "fs": "^0.0.1-security",
+        "path": "^0.12.7",
+        "playwright": "^1.50.0"
+    },
+    "devDependencies": {
+        "@types/node": "^22.10.10",
+        "ts-node": "^10.9.2",
+        "tsconfig-paths": "^4.2.0",
+        "typescript": "^5.7.3"
+    }
+}
